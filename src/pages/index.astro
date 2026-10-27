@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Icon from '../components/Icon.astro';
+import Seo from '../components/Seo.astro';
 import { site, mapUrl, dishes, flyerRates, yen } from '../data/site';
 import hero from '../assets/hero-chie-concept.png';
 import stage from '../assets/S__5783566.jpg';
@@ -10,7 +11,6 @@ import flyer from '../assets/S__5783570.jpg';
 import entrance from '../assets/S__5783565.jpg';
 import '../styles/global.css';
 
-const description = `小倉・京町の${site.name}。歌う時間も、食事の時間も。${site.station}。店内の雰囲気、お食事、ご利用案内、アクセスをご紹介します。ご予約・お問い合わせは${site.phone}へ。`;
 const links = [
   { href: '#about', label: 'チエのこと' },
   { href: '#menu', label: 'お食事' },
@@ -18,34 +18,37 @@ const links = [
   { href: '#access', label: 'アクセス' },
 ];
 ---
+
 <!doctype html>
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
+    <Seo />
     <meta name="theme-color" content="#291b2d" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="ja_JP" />
-    <meta property="og:title" content="カラオケ喫茶チエ｜歌って、笑って、ひと息。小倉・京町" />
-    <meta property="og:description" content={description} />
-    <meta property="og:site_name" content={site.name} />
     <link rel="icon" type="image/svg+xml" href="/chie-mark.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet" />
-    <title>カラオケ喫茶チエ｜歌って、笑って、ひと息。小倉・京町</title>
   </head>
   <body>
     <a href="#main" class="skip-link">本文へ移動</a>
     <header class="site-header" data-header>
       <a class="header-brand" href="#home" aria-label="カラオケ喫茶チエ トップへ"><Icon name="mic" size={21} /><span><small>カラオケ喫茶</small><strong>チエ</strong></span></a>
-      <nav class="desktop-nav" aria-label="メインナビゲーション">{links.map(link => <a href={link.href}>{link.label}</a>)}</nav>
+      <nav class="desktop-nav" aria-label="メインナビゲーション">{links.map((link) => <a href={link.href}>{link.label}</a>)}</nav>
       <a class="header-phone" href={site.phoneHref}><Icon name="phone" size={17} /><span>{site.phone}</span></a>
       <details class="mobile-nav" data-mobile-nav>
         <summary><span class="menu-lines" aria-hidden="true"></span><span class="sr-only">メニューを開閉</span></summary>
         <nav aria-label="モバイルナビゲーション">
-          {links.map((link, i) => <a href={link.href}><small>0{i + 1}</small>{link.label}<Icon name="arrow" size={20} /></a>)}
+          {
+            links.map((link, i) => (
+              <a href={link.href}>
+                <small>0{i + 1}</small>
+                {link.label}
+                <Icon name="arrow" size={20} />
+              </a>
+            ))
+          }
           <a class="mobile-nav-phone" href={site.phoneHref}><Icon name="phone" size={18} />{site.phone}</a>
         </nav>
       </details>
@@ -85,7 +88,18 @@ const links = [
       <section id="menu" class="food section-space" aria-labelledby="menu-title">
         <div class="food-heading" data-reveal><p class="eyebrow"><span>02</span> THE CAFE MENU</p><h2 id="menu-title">歌の合間の、<br class="mobile-break" />おいしい時間。</h2><p>おなかが空いたら、ひと休み。<br />お食事も、おつまみも。</p></div>
         <figure class="curry-photo photo-reveal" data-photo><Image src={curry} alt="白いお皿に盛り付けたチエのカレーライス" widths={[480, 800, 1100]} sizes="(max-width: 700px) 86vw, 60vw" format="webp" loading="lazy" /><figcaption><span>CHIE'S CURRY RICE</span><span>カレー</span></figcaption></figure>
-        <div class="menu-sheet"><div class="menu-sheet-heading" data-reveal><h3>チエの人気メニュー</h3><span>FAVORITES</span></div><ol class="dish-list">{dishes.map((dish, index) => <li data-menu-row><span class="dish-number">0{index + 1}</span><span class="dish-name">{dish.name}</span><span class="dish-english">{dish.english}</span>{dish.price !== null && <span class="dish-price">{yen(dish.price)}</span>}</li>)}</ol><p class="menu-footnote">お食事の価格は、お店へお問い合わせください。</p></div>
+        <div class="menu-sheet">
+          <div class="menu-sheet-heading" data-reveal><h3>チエの人気メニュー</h3><span>FAVORITES</span></div><ol class="dish-list">
+            {
+              dishes.map((dish, index) => (
+                <li data-menu-row>
+                  <span class="dish-english">{dish.english}</span>
+                  {dish.price !== null && <span class="dish-price">{yen(dish.price)}</span>}
+                </li>
+              ))
+            }
+          </ol><p class="menu-footnote">お食事の価格は、お店へお問い合わせください。</p>
+        </div>
         <span class="food-watermark" aria-hidden="true">Bon appétit.</span>
       </section>
 
@@ -94,7 +108,23 @@ const links = [
         <div class="guide-content">
           <div class="rate-panel" data-reveal>
             <div class="rate-title"><h3>セット料金</h3><span>SET MENU</span></div><p class="rate-source">ご案内チラシ記載の料金</p>
-            <table class="rate-table"><caption class="sr-only">ご案内チラシに記載された昼・夜のセット料金</caption><thead><tr><th scope="col"><span class="sr-only">セット</span></th><th scope="col">女性</th><th scope="col">男性</th></tr></thead><tbody>{flyerRates.map(rate => <tr><th scope="row">{rate.label}<small>{rate.english}</small></th><td>{yen(rate.women)}</td><td>{yen(rate.men)}</td></tr>)}</tbody></table>
+            <table class="rate-table">
+              <caption class="sr-only">ご案内チラシに記載された昼・夜のセット料金</caption><thead><tr><th scope="col"><span class="sr-only">セット</span></th><th scope="col">女性</th><th scope="col">男性</th></tr></thead><tbody
+                >{
+                  flyerRates.map((rate) => (
+                    <tr>
+                      <>
+                        <th scope="row">
+                          {rate.label}
+                          <small>{rate.english}</small>
+                        </th>
+                        <td>{yen(rate.women)}</td>
+                        <td>{yen(rate.men)}</td>
+                      </>
+                    </tr>
+                  ))
+                }</tbody>
+            </table>
             <div class="set-includes"><span>セット内容</span><p>カラオケ歌い放題<br />ワンドリンク・フルーツチャーム付き</p></div>
             <p class="rate-note">チラシでは、アルコールへの変更は＋200円でご案内しています。<br />最新の料金・セット内容はお電話でお問い合わせください。</p>
             <a class="text-link light-link" href={site.phoneHref}>電話で問い合わせる<Icon name="arrow" size={22} /></a>

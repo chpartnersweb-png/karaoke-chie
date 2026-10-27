@@ -187,5 +187,5 @@ ScrollTriggerで表示位置とアニメーションを連携させる。Lenis�
 - `public/chie-mark.svg`：店舗用マイクモチーフのファビコン。
 - 生成ヒーロー1枚と提供画像5枚をすべて参照。生成ヒーローにはイメージビジュアルの表示を付ける。
 - 利用料金は「ご案内チラシ記載の料金」と明示し、現在の料金・内容は電話で問い合わせる案内を添える。料理5品の価格は未設定。
-- 本番URLが未提供のためcanonical・og:url・公開URLを含む構造化データは未設定。タイトル、description、基本OG情報は実装。
+- SEO追加：指定URL `https://karaoke-chie.pages.dev/` を基準にcanonical・OGP/X・JSON-LD・robots.txt・sitemap.xmlを実装。詳細は `docs/SEO.md` に記載。
 - ユーザー指示により実装後の確認はすべて未実施。デプロイも行っていない。

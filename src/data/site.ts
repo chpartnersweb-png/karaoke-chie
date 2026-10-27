@@ -1,15 +1,49 @@
+const address = {
+  addressLocality: '北九州市小倉北区',
+  addressRegion: '福岡県',
+  streetAddress: '京町4-6-18-102',
+  addressCountry: 'JP',
+};
+
+const hours = {
+  weekday: { opens: '13:00', closes: '23:00' },
+  weekend: { opens: '13:00', closes: '23:30' },
+};
+
 export const site = {
   name: 'カラオケ喫茶チエ',
   phone: '093-531-6116',
   phoneHref: 'tel:0935316116',
-  address: '北九州市小倉北区京町4-6-18-102',
+  phoneInternational: '+81935316116',
+  address: `${address.addressLocality}${address.streetAddress}`,
+  postalAddress: address,
   station: 'JR小倉駅から徒歩6分',
-  weekdayHours: '13:00–23:00',
-  weekendHours: '13:00–23:30',
+  weekdayHours: `${hours.weekday.opens}–${hours.weekday.closes}`,
+  weekendHours: `${hours.weekend.opens}–${hours.weekend.closes}`,
   closed: '月曜日',
   capacity: '30〜40人',
   instagram: 'https://www.instagram.com/karaoke_chie',
 };
+
+// Regular weekdays only. No unconfirmed holiday dates or holiday Monday overrides.
+export const openingHoursSpecification = [
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    ...hours.weekday,
+  },
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Saturday', 'Sunday'],
+    ...hours.weekend,
+  },
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: 'Monday',
+    opens: '00:00',
+    closes: '00:00',
+  },
+];
 
 export const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address)}`;
 
