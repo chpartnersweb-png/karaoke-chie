@@ -911,6 +911,10 @@ figcaption span:first-child {
   align-items: baseline;
   gap: 22px;
 }
+.hours-break {
+  display: block;
+  margin-top: 4px;
+}
 .hours-line > span:first-child {
   min-width: 4em;
   font-size: 11px;
@@ -990,8 +994,11 @@ figcaption span:first-child {
 .contact-hours > span {
   margin-inline: 12px;
 }
+.contact-hours > .hours-break {
+  margin-inline: 0;
+}
 .contact-hours > .contact-closed {
-  margin-left: 20px;
+  margin-left: 0;
 }
 .site-footer {
   display: flex;

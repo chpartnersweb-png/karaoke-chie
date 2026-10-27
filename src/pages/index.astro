@@ -142,7 +142,7 @@ const links = [
           <dl class="shop-info">
             <div><dt>住所</dt><dd><span class="address-text">{site.address}</span><a href={mapUrl} target="_blank" rel="noopener noreferrer" class="map-inline">MAP <Icon name="arrow" size={16} /></a></dd></div>
             <div><dt>アクセス</dt><dd>{site.station}</dd></div>
-            <div><dt>営業時間</dt><dd><span class="hours-line"><span>平日</span><span>{site.weekdayHours}</span></span><span class="hours-line"><span>土日祝</span><span>{site.weekendHours}</span></span></dd></div>
+            <div><dt>営業時間</dt><dd><span class="hours-line"><span>平日</span><span>{site.weekdayHours}</span></span><span class="hours-line"><span>土日祝</span><span>{site.weekendHours}</span></span><span class="hours-break">{site.breakNote}</span></dd></div>
             <div><dt>定休日</dt><dd>{site.closed}</dd></div>
             <div><dt>お席</dt><dd>{site.capacity}</dd></div>
             <div><dt>電話番号</dt><dd><a href={site.phoneHref} class="info-phone">{site.phone}</a></dd></div>
@@ -151,7 +151,7 @@ const links = [
         </div>
       </section>
 
-      <section id="contact" class="contact" aria-labelledby="contact-title"><div data-reveal><p class="eyebrow">LET'S HAVE A GOOD TIME</p><h2 id="contact-title">次の一曲は、チエで。</h2><p class="contact-label">ご予約・お問い合わせ</p><a class="contact-phone" href={site.phoneHref}><Icon name="phone" size={30} /><span>{site.phone}</span></a><p class="contact-hours">平日 {site.weekdayHours}<span>／</span>土日祝 {site.weekendHours}<br class="mobile-break" /><span class="contact-closed">月曜日定休</span></p></div></section>
+      <section id="contact" class="contact" aria-labelledby="contact-title"><div data-reveal><p class="eyebrow">LET'S HAVE A GOOD TIME</p><h2 id="contact-title">次の一曲は、チエで。</h2><p class="contact-label">ご予約・お問い合わせ</p><a class="contact-phone" href={site.phoneHref}><Icon name="phone" size={30} /><span>{site.phone}</span></a><p class="contact-hours">平日 {site.weekdayHours}<span>／</span>土日祝 {site.weekendHours}<span class="hours-break">{site.breakNote}</span><span class="contact-closed">月曜日定休</span></p></div></section>
     </main>
 
     <footer class="site-footer"><a class="footer-name" href="#home">カラオケ喫茶チエ</a><small>© {new Date().getFullYear()} カラオケ喫茶チエ</small><a class="back-top" href="#home">PAGE TOP <span aria-hidden="true">↑</span></a></footer>

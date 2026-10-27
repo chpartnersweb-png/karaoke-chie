@@ -10,6 +10,8 @@ const hours = {
   weekend: { opens: '13:00', closes: '23:30' },
 };
 
+const breakHours = { starts: '17:00', ends: '18:30' };
+
 export const site = {
   name: 'カラオケ喫茶チエ',
   phone: '093-531-6116',
@@ -20,6 +22,7 @@ export const site = {
   station: 'JR小倉駅から徒歩6分',
   weekdayHours: `${hours.weekday.opens}–${hours.weekday.closes}`,
   weekendHours: `${hours.weekend.opens}–${hours.weekend.closes}`,
+  breakNote: `(休憩時間　${breakHours.starts}〜${breakHours.ends})`,
   closed: '月曜日',
   capacity: '30〜40人',
   instagram: 'https://www.instagram.com/karaoke_chie',
@@ -27,16 +30,23 @@ export const site = {
 
 // Regular weekdays only. No unconfirmed holiday dates or holiday Monday overrides.
 export const openingHoursSpecification = [
-  {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-    ...hours.weekday,
-  },
-  {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Saturday', 'Sunday'],
-    ...hours.weekend,
-  },
+  ...[
+    { dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'], ...hours.weekday },
+    { dayOfWeek: ['Saturday', 'Sunday'], ...hours.weekend },
+  ].flatMap(period => [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: period.dayOfWeek,
+      opens: period.opens,
+      closes: breakHours.starts,
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: period.dayOfWeek,
+      opens: breakHours.ends,
+      closes: period.closes,
+    },
+  ]),
   {
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: 'Monday',
